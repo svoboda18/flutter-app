@@ -55,6 +55,21 @@ class HomeView extends StatelessWidget {
                           isSelected:  model.selectedIndex == 3,
                           onSelected: (value, label) => model.setCurrentChip(label, 3),
                         ),
+                        PageTransitionSwitcher(
+                          transitionBuilder: (child, primaryAnimation, secondaryAnimation) => FadeThroughTransition(
+                              animation: primaryAnimation,
+                              secondaryAnimation: secondaryAnimation,
+                              fillColor: Colors.transparent,
+                              child: child,
+                          ),
+                          layoutBuilder: (entries) {
+                            return Stack(
+                              alignment: Alignment.center,
+                              children: entries,
+                            );
+                          },
+                          child: ServicesCardWidget(filter: model.currentChipLabel, isLoading: model.isLoading),
+                        ),
                       ],
                     ),
                   ],
