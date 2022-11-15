@@ -4,6 +4,7 @@ import 'theme.dart';
 // ignore: unused_import
 import 'package:test/app/app.dart';
 import 'package:test/app/app.locator.dart';
+import 'package:test/app/app.router.dart';
 import 'package:test/ui/views/navigation/navigation_view.dart';
 import 'package:test/services/app_api.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         darkTheme: darkCustomTheme,
         themeMode: themeMode,
         navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
         home: const NavigationView(),
       ),
     );

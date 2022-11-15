@@ -11,6 +11,7 @@ import 'package:test/ui/views/profile/profile_viewmodel.dart';
 
 import 'package:test/ui/views/navigation/navigation_view.dart';
 import 'package:test/ui/views/navigation/navigation_viewmodel.dart';
+
 import 'package:test/ui/views/settings/settings_view.dart';
 import 'package:test/ui/views/settings/settings_viewmodel.dart';
 
@@ -26,6 +27,7 @@ import 'package:test/ui/views/settings/settings_viewmodel.dart';
     LazySingleton(classType: NavigationViewModel),
     LazySingleton(classType: ProfileViewModel),
     LazySingleton(classType: SettingsViewModel),
+    LazySingleton(classType: NavigationService),
     LazySingleton(classType: AppAPI)
   ],
 )
