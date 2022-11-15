@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:test/ui/views/settings/settings_viewmodel.dart';
-import 'package:test/ui/widgets/cards/service_card.dart';
 import 'package:test/ui/widgets/settings/section.dart';
 import 'package:test/ui/widgets/shared/sliver_appbar.dart';
 import 'package:test/ui/widgets/shared/switch_tile.dart';
@@ -24,6 +23,7 @@ class SettingsView extends StatelessWidget {
         body: CustomScrollView(
           slivers: <Widget>[
             const SliverAppBarWidget(
+              hasBackArrow: true,
               title: 'Settings'
             ),
             SliverList(

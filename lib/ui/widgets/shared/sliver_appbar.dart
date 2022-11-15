@@ -5,7 +5,7 @@ class SliverAppBarWidget extends StatelessWidget {
   final String title;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
-  final bool isMainView;
+  final bool hasBackArrow;
   final Function()? onBackButtonPressed;
 
   const SliverAppBarWidget({
@@ -13,7 +13,7 @@ class SliverAppBarWidget extends StatelessWidget {
     required this.title,
     this.actions,
     this.bottom,
-    this.isMainView = false,
+    this.hasBackArrow = false,
     this.onBackButtonPressed,
   });
 
@@ -24,11 +24,11 @@ class SliverAppBarWidget extends StatelessWidget {
       snap: false,
       floating: false,
       expandedHeight: 100.0,
-      automaticallyImplyLeading: !isMainView,
+      automaticallyImplyLeading: hasBackArrow,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.only(
           bottom: bottom != null ? 16.0 : 14.0,
-          left: isMainView ? 20.0 : 55.0,
+          left: hasBackArrow ? 55.0 : 20.0,
         ),
         title: Text(title,
           style: GoogleFonts.inter(
@@ -36,16 +36,16 @@ class SliverAppBarWidget extends StatelessWidget {
           ),
         )
       ),
-      leading: isMainView
-          ? null
-          : IconButton(
+      leading: hasBackArrow
+          ? IconButton(
               icon: Icon(
                 Icons.arrow_back,
                 color: Theme.of(context).textTheme.headline6!.color,
               ),
               onPressed:
                   onBackButtonPressed ?? () => Navigator.of(context).pop(),
-            ),
+            )
+          : null,
       backgroundColor: MaterialStateColor.resolveWith(
         (states) => states.contains(MaterialState.scrolledUnder)
             ? Theme.of(context).colorScheme.surface
