@@ -16,8 +16,8 @@ class SkeltonWidget extends StatelessWidget {
         width: width,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.brightness == Brightness.dark ?
-                Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05),
+          color: Theme.of(context).textTheme.headline6!.color?.withOpacity(0.05),
+          borderRadius: const BorderRadius.all(Radius.circular(18)),
         ),
     );
   }

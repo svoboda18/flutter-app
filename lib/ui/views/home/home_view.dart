@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:animations/animations.dart';
 import 'package:stacked/stacked.dart';
+import 'package:test/animations.dart';
 import 'package:test/ui/views/home/home_viewmodel.dart';
-import 'package:test/ui/widgets/home/services_card.dart';
 import 'package:test/ui/widgets/shared/sliver_appbar.dart';
-import 'package:test/ui/widgets/shared/row_chip.dart';
+import 'package:test/ui/widgets/shared/raw_chip.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -16,62 +15,35 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
      disposeViewModel: false,
      viewModelBuilder: () => HomeViewModel(),
+     onModelReady: (model) => model.initialize(context),
      builder: (context, model, child) => Scaffold(
       body: RefreshIndicator(
         onRefresh: () => model.refreshContent(),
         child: CustomScrollView(
           slivers: <Widget>[
             const SliverAppBarWidget(
-              isMainView: true,
               title: 'Home',
             ),
             SliverPadding(
               padding: const EdgeInsets.all(8.0),
               sliver:
-                SliverList(delegate: SliverChildListDelegate(
+                SliverList(delegate: SliverChildListDelegate.fixed(
                   <Widget> [
-                    Row(
-                      children: [
-                        RawChipWidget(
-                          label: 'Category 1',
-                          isSelected: model.selectedIndex == 0,
-                          onSelected: (value, label) => model.setCurrentChip(label, 0),
+                    SizedBox(
+                      height: 40,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => RawChipWidget(
+                          label: 'Category ${index + 1}',
+                          isSelected: model.selectedIndex == index,
+                          onSelected: (value, label) => model.setCurrentChip(label, index),
                         ),
-                        const SizedBox(width: 10),
-                        RawChipWidget(
-                          label: 'Category 2',
-                          isSelected:  model.selectedIndex == 1,
-                          onSelected: (value, label) => model.setCurrentChip(label, 1),
-                        ),
-                        const SizedBox(width: 10),
-                        RawChipWidget(
-                          label: 'Category 3',
-                          isSelected:  model.selectedIndex == 2,
-                          onSelected: (value, label) => model.setCurrentChip(label, 2),
-                        ),
-                        const SizedBox(width: 10),
-                        RawChipWidget(
-                          label: 'Category 4',
-                          isSelected:  model.selectedIndex == 3,
-                          onSelected: (value, label) => model.setCurrentChip(label, 3),
-                        ),
-                        PageTransitionSwitcher(
-                          transitionBuilder: (child, primaryAnimation, secondaryAnimation) => FadeThroughTransition(
-                              animation: primaryAnimation,
-                              secondaryAnimation: secondaryAnimation,
-                              fillColor: Colors.transparent,
-                              child: child,
-                          ),
-                          layoutBuilder: (entries) {
-                            return Stack(
-                              alignment: Alignment.center,
-                              children: entries,
-                            );
-                          },
-                          child: ServicesCardWidget(filter: model.currentChipLabel, isLoading: model.isLoading),
-                        ),
-                      ],
+                        separatorBuilder: (context, index) => const SizedBox(width: 10),
+                        itemCount: 6,
+                      ),
                     ),
+                    const SizedBox(height: 14),
+                    animatePageTransition(context, model.getServicesCard()),
                   ],
                 ),
               ),

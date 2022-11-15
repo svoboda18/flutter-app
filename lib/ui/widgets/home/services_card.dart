@@ -13,18 +13,25 @@ class ServicesCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: ListView(
+    return SizedBox(
+      height: 100,
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        children: !isLoading ? [
-          ServiceCardWidget(filter: filter),
-          const SizedBox(width: 10),
-        ] :
-        const [
-          SkeltonWidget(height: 36, width: 36),
-          SizedBox(height: 10),
-          SkeltonWidget(height: 12),
-        ],
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        itemBuilder: (context, index) => !isLoading ? ServiceCardWidget(filter: '$filter: $index') :
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: const <Widget> [
+                  SkeltonWidget(height: 70, width: 120),
+                  SizedBox(height: 8),
+                  SkeltonWidget(height: 12, width: 80),
+                ],
+              ),
+            ),
+          ),
+        itemCount: 5,
       )
     );
   }
