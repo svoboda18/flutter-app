@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:animations/animations.dart';
 import 'package:stacked/stacked.dart';
+import 'package:test/animations.dart';
 
 import 'package:test/ui/views/navigation/navigation_viewmodel.dart';
 
@@ -16,20 +16,8 @@ class NavigationView extends StatelessWidget {
       viewModelBuilder: () => NavigationViewModel(),
       onModelReady: (model) => model.initialize(context),
       builder: (context, model, child) => Scaffold(
-        body: PageTransitionSwitcher(
-          duration: const Duration(milliseconds: 400),
-          transitionBuilder: (child, animation, secondaryAnimation) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              fillColor: Theme.of(context).colorScheme.surface,
-              child: child,
-            );
-          },
-          child: model.getViewForIndex(model.currentIndex),
-        ),
+        body: animatePageTransition(context, model.getViewForIndex(model.currentIndex)),
         bottomNavigationBar: NavigationBar(
-            height: 70,
             onDestinationSelected: model.setIndex,
             selectedIndex: model.currentIndex,
             labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
@@ -47,17 +35,17 @@ class NavigationView extends StatelessWidget {
               NavigationDestination(
                 icon: Icon(Icons.search_outlined),
                 selectedIcon: Icon(Icons.search),
-                label: "Search",
+                label: 'Search',
               ),
               NavigationDestination(
                 icon: Icon(Icons.chat_outlined),
                 selectedIcon: Icon(Icons.chat),
-                label: "Chat",
+                label: 'Chat',
               ),
               NavigationDestination(
                 icon: Icon(Icons.account_circle_outlined),
                 selectedIcon: Icon(Icons.account_circle),
-                label: "Account",
+                label: 'Account',
               ),
             ],
         ),
